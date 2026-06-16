@@ -1,129 +1,141 @@
 import streamlit as st
 
 def inject_custom_css():
-    """Injects a minimalist, professional design using only black, blue, and white styling."""
+    """Injects fonts, Tailwind CDN, and custom overrides for Streamlit elements to match the light theme design."""
+    # Inject CDN scripts and style overrides
     st.markdown(
         """
+        <!-- Load Tailwind CSS and Web Fonts -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+        
+        <script>
+            tailwind.config = {
+              theme: {
+                extend: {
+                  colors: {
+                    primary: "#3525cd",
+                    "primary-container": "#4f46e5",
+                    "surface-white": "#FFFFFF",
+                    "surface-soft": "#F1F5F9",
+                    "background": "#f7f9fb",
+                    "slate-900": "#0F172A",
+                    "slate-600": "#475569",
+                  }
+                }
+              }
+            }
+        </script>
+        
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
-        /* Clean black/dark slate background */
+        /* Main Streamlit Overrides */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-            font-family: 'Outfit', sans-serif;
-            background-color: #060913 !important; /* Professional dark blue-black */
-            background-image: none !important;
-            color: #FFFFFF !important;
+            font-family: 'Inter', sans-serif !important;
+            background-color: #f7f9fb !important;
+            color: #191c1e !important;
         }
-        
-        /* Sidebar styling override */
+
+        /* Sidebar override */
         [data-testid="stSidebar"] {
-            background-color: #0A0F1D !important;
-            border-right: 1px solid #1E293B;
+            background-color: #ffffff !important;
+            border-right: 1px solid #e2e8f0;
         }
 
-        /* Title styling - Clean Solid White */
-        .main-title {
-            color: #FFFFFF !important;
-            font-size: 2.6rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.2rem;
-            letter-spacing: -0.5px;
+        /* Hide Streamlit elements */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+
+        /* Card Container */
+        .glass-card, [data-testid="stForm"] {
+            background: #ffffff !important;
+            border: 1px solid rgba(226, 232, 240, 0.8) !important;
+            border-radius: 24px !important;
+            padding: 32px !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+            margin-bottom: 24px;
         }
 
-        /* Subtitle - Professional Blue */
-        .subtitle {
-            text-align: center;
-            color: #3B82F6;
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        /* Solid Dark Card Containers with Subtle Blue/Grey Borders */
-        .glass-card {
-            background: #0A0F1D;
-            border: 1px solid #1E293B;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Job Cards with hover interaction */
-        .job-card {
-            background: #0D1527;
-            border: 1px solid #1E293B;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 18px;
-            transition: all 0.25s ease;
-        }
-        .job-card:hover {
-            transform: translateY(-2px);
-            border-color: #3B82F6;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
-        }
-
-        /* Badges - clean blue, black, and white borders */
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-right: 6px;
-            margin-bottom: 6px;
-            color: #FFFFFF !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-purple {
-            background: #1E3A8A; /* Navy Blue */
-            border: 1px solid #3B82F6;
-        }
-        .badge-blue {
-            background: #0F172A; /* Slate */
-            border: 1px solid #475569;
-        }
-        .badge-green {
-            background: #0B1F19; /* Deep Slate Green */
-            border: 1px solid #10B981;
-        }
-
-        /* Match Score circles (Professional Blue) */
-        .score-circle {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #3B82F6 !important;
-            text-align: right;
-        }
-        
-        /* Modern form inputs & button styling - clean blue & white */
+        /* Button Styling */
         .stButton>button {
-            background-color: #2563EB !important;
-            background-image: none !important;
-            color: #FFFFFF !important;
-            border: 1px solid #3B82F6 !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
-            padding: 8px 20px !important;
-            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2) !important;
-            transition: all 0.2s ease !important;
+            background-color: #3525cd !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            padding: 12px 28px !important;
+            font-size: 1rem !important;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3) !important;
+            transition: all 0.2s ease-in-out !important;
+            width: 100%;
         }
         .stButton>button:hover {
-            background-color: #1D4ED8 !important;
-            border-color: #2563EB !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3) !important;
+            background-color: #4f46e5 !important;
+            transform: scale(1.01) !important;
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4) !important;
+        }
+        
+        /* Secondary Action Buttons */
+        .secondary-btn>button {
+            background-color: transparent !important;
+            color: #0F172A !important;
+            border: 1px solid #0F172A !important;
+            box-shadow: none !important;
+        }
+        .secondary-btn>button:hover {
+            background-color: #f8fafc !important;
+            color: #0F172A !important;
         }
 
-        /* Form Controls Styling */
-        input, select, textarea {
-            background-color: #0D1527 !important;
-            border: 1px solid #1E293B !important;
-            color: #FFFFFF !important;
+        /* Slider and Inputs styling */
+        input, select, textarea, [data-baseweb="input"] {
+            background-color: #F1F5F9 !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 12px !important;
+            color: #0F172A !important;
+        }
+        
+        /* Custom file uploader styling */
+        [data-testid="stFileUploader"] {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+        [data-testid="stFileUploader"]:hover {
+            border-color: #4f46e5;
+        }
+        
+        /* Badge classes */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .badge-purple {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+        }
+        .badge-blue {
+            background-color: #e0f2fe;
+            color: #0284c7;
+        }
+        .badge-green {
+            background-color: #d1fae5;
+            color: #059669;
+        }
+        
+        /* Score circle */
+        .score-circle {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #3525cd;
+            text-align: right;
         }
         </style>
         """,
