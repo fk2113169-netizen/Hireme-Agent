@@ -1,8 +1,7 @@
 import streamlit as st
 
 def inject_custom_css():
-    """Injects fonts, Tailwind CDN, and custom overrides for Streamlit elements to match the light theme design."""
-    # Inject CDN scripts and style overrides
+    """Injects high-contrast light theme overrides to ensure readability and clear styling."""
     st.markdown(
         """
         <!-- Load Tailwind CSS and Web Fonts -->
@@ -29,113 +28,141 @@ def inject_custom_css():
         </script>
         
         <style>
-        /* Main Streamlit Overrides */
-        html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+        /* Force light background on all app viewports */
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stCanvas"] {
             font-family: 'Inter', sans-serif !important;
-            background-color: #f7f9fb !important;
-            color: #191c1e !important;
+            background-color: #f8fafc !important; /* Soft white/light slate */
+            background-image: none !important;
+            color: #0f172a !important;
         }
 
-        /* Sidebar override */
-        [data-testid="stSidebar"] {
+        /* Sidebar override to light theme */
+        [data-testid="stSidebar"], [data-testid="stSidebar"] * {
             background-color: #ffffff !important;
             border-right: 1px solid #e2e8f0;
+            color: #0f172a !important;
         }
 
-        /* Hide Streamlit elements */
+        /* Hide default Streamlit headers & footers */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
 
-        /* Card Container */
-        .glass-card, [data-testid="stForm"] {
-            background: #ffffff !important;
-            border: 1px solid rgba(226, 232, 240, 0.8) !important;
-            border-radius: 24px !important;
-            padding: 32px !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-            margin-bottom: 24px;
+        /* FORCE HIGH CONTRAST ON ALL TEXT ELEMENTS (Avoid theme bleeding) */
+        h1, h2, h3, h4, h5, h6, 
+        p, span, label, li, a, div, 
+        .stText, [data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p {
+            color: #0f172a !important; 
+            font-family: 'Inter', sans-serif !important;
+        }
+        
+        /* Specific header colors */
+        .main-title {
+            color: #1e1b4b !important; /* Deep navy */
+            font-weight: 800 !important;
+        }
+        
+        .subtitle {
+            color: #3b82f6 !important; /* Professional blue */
+            font-weight: 500 !important;
         }
 
-        /* Button Styling */
+        /* Solid White Cards (No opacity overlays to prevent background bleeding) */
+        .glass-card, [data-testid="stForm"], [data-testid="stVerticalBlockBorder"] {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 16px !important;
+            padding: 32px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+            margin-bottom: 24px !important;
+        }
+
+        /* Job Cards with defined background */
+        .job-card {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            margin-bottom: 18px !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+        .job-card:hover {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        /* Form Controls Overrides (Inputs, Select boxes, Textareas) */
+        input, select, textarea, [data-baseweb="input"], [data-baseweb="select"] {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 8px !important;
+            color: #0f172a !important;
+        }
+        input::placeholder {
+            color: #94a3b8 !important;
+        }
+        
+        /* File Uploader override */
+        [data-testid="stFileUploader"] {
+            background-color: #ffffff !important;
+            border: 2px dashed #3b82f6 !important;
+            border-radius: 12px !important;
+            padding: 24px !important;
+        }
+        [data-testid="stFileUploader"] * {
+            color: #0f172a !important;
+        }
+        
+        /* Primary Action Buttons styling */
         .stButton>button {
             background-color: #3525cd !important;
             color: #ffffff !important;
             border: none !important;
-            border-radius: 12px !important;
+            border-radius: 8px !important;
             font-weight: 700 !important;
-            padding: 12px 28px !important;
-            font-size: 1rem !important;
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3) !important;
+            padding: 10px 24px !important;
+            font-size: 0.95rem !important;
+            box-shadow: 0 4px 6px -1px rgba(53, 37, 205, 0.2) !important;
             transition: all 0.2s ease-in-out !important;
             width: 100%;
         }
         .stButton>button:hover {
             background-color: #4f46e5 !important;
-            transform: scale(1.01) !important;
-            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4) !important;
-        }
-        
-        /* Secondary Action Buttons */
-        .secondary-btn>button {
-            background-color: transparent !important;
-            color: #0F172A !important;
-            border: 1px solid #0F172A !important;
-            box-shadow: none !important;
-        }
-        .secondary-btn>button:hover {
-            background-color: #f8fafc !important;
-            color: #0F172A !important;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3) !important;
         }
 
-        /* Slider and Inputs styling */
-        input, select, textarea, [data-baseweb="input"] {
-            background-color: #F1F5F9 !important;
-            border: 1px solid #CBD5E1 !important;
-            border-radius: 12px !important;
-            color: #0F172A !important;
-        }
-        
-        /* Custom file uploader styling */
-        [data-testid="stFileUploader"] {
-            background-color: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-        }
-        [data-testid="stFileUploader"]:hover {
-            border-color: #4f46e5;
-        }
-        
-        /* Badge classes */
+        /* Badges styling */
         .badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            display: inline-block !important;
+            padding: 4px 12px !important;
+            border-radius: 9999px !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            margin-right: 8px !important;
+            margin-bottom: 8px !important;
         }
         .badge-purple {
-            background-color: #e0e7ff;
-            color: #4f46e5;
+            background-color: #e0e7ff !important;
+            color: #4f46e5 !important;
+            border: 1px solid #c7d2fe !important;
         }
         .badge-blue {
-            background-color: #e0f2fe;
-            color: #0284c7;
+            background-color: #e0f2fe !important;
+            color: #0369a1 !important;
+            border: 1px solid #bae6fd !important;
         }
         .badge-green {
-            background-color: #d1fae5;
-            color: #059669;
+            background-color: #d1fae5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
         }
-        
-        /* Score circle */
+
+        /* Match Score display */
         .score-circle {
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #3525cd;
-            text-align: right;
+            font-size: 2.4rem !important;
+            font-weight: 800 !important;
+            color: #3525cd !important;
+            text-align: right !important;
         }
         </style>
         """,
